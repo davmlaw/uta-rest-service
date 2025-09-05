@@ -17,6 +17,7 @@
     sudo -u ${USER} ${VENV_DIR}/bin/pip install hgvs
 
     # FastAPI service
+    sudo cp config/systemd/uta_rest_service_uvcorn.service /lib/systemd/system
     sudo systemctl daemon-reload
     sudo systemctl enable --now uta_rest_service_uvcorn
     sudo systemctl status --no-pager uta_rest_service_uvcorn
