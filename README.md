@@ -1,1 +1,28 @@
 # uta-rest-service
+
+
+## INSTALL
+
+    # Fresh Ubuntu 24 VM
+    sudo apt update && sudo apt -y upgrade
+    sudo apt -y install python3-venv python3-pip nginx git postgresql libpq-dev
+
+    export USER=uta_rest_service
+    export DEPLOY_DIR=/opt/uta_rest_service
+    export VENV_DIR=${DEPLOY_DIR}/.venv
+    sudo adduser --system --group --home /opt/uta_rest_service uta_rest_service
+    sudo -u uta_rest python3 -m venv ${VENV_DIR}
+    sudo -u uta_rest ${VENV_DIR}/bin/pip install --upgrade pip wheel
+    sudo -u uta_rest ${VENV_DIR}/bin/pip install "fastapi[standard]" "uvicorn[standard]" gunicorn
+    sudo -u uta_rest ${VENV_DIR}/bin/pip install hgvs
+
+    # FastAPI service
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now uta_rest_service_uvcorn
+    sudo systemctl status --no-pager uta_rest_service_uvcorn
+
+    # Nginx - add site / reload
+    sudo cp ${DEPLOY_DIR}/config/nginx/sites-available/uta_rest_service /etc/nginx/sites-available/
+    sudo ln -s /etc/nginx/sites-available/uta_rest_service /etc/nginx/sites-enabled/uta_rest_service
+    sudo nginx -t && sudo systemctl reload nginx
+
