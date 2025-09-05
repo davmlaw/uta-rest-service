@@ -11,10 +11,10 @@
     export DEPLOY_DIR=/opt/uta_rest_service
     export VENV_DIR=${DEPLOY_DIR}/.venv
     sudo adduser --system --group --home /opt/uta_rest_service uta_rest_service
-    sudo -u uta_rest python3 -m venv ${VENV_DIR}
-    sudo -u uta_rest ${VENV_DIR}/bin/pip install --upgrade pip wheel
-    sudo -u uta_rest ${VENV_DIR}/bin/pip install "fastapi[standard]" "uvicorn[standard]" gunicorn
-    sudo -u uta_rest ${VENV_DIR}/bin/pip install hgvs
+    sudo -u ${USER} python3 -m venv ${VENV_DIR}
+    sudo -u ${USER} ${VENV_DIR}/bin/pip install --upgrade pip wheel
+    sudo -u ${USER} ${VENV_DIR}/bin/pip install "fastapi[standard]" "uvicorn[standard]" gunicorn
+    sudo -u ${USER} ${VENV_DIR}/bin/pip install hgvs
 
     # FastAPI service
     sudo systemctl daemon-reload
