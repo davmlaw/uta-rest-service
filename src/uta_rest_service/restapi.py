@@ -5,7 +5,8 @@ from hgvs.dataproviders.uta import UTABase, connect
 from hgvs.exceptions import HGVSDataNotAvailableError, HGVSError
 
 app = FastAPI()
-conn = connect()
+# Use pooling so that it's a thread-safe object
+conn = connect(pooling=True)
 
 
 def http_404(hgvs_exception=None):
